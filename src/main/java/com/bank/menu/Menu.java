@@ -1,13 +1,16 @@
 package com.bank.menu;
-
 import java.util.Scanner;
 
+import com.bank.models.Customer;
+import com.bank.models.User;
 import com.bank.service.AuthenticationService;
+import com.bank.service.BankRegistrationService;
+
 
 public class Menu {
 
 	AuthenticationService sr;
-
+	BankRegistrationService sr1;
 	public Menu(AuthenticationService sr) {
 		this.sr = sr;
 	}
@@ -61,12 +64,43 @@ public class Menu {
 		  System.out.println("5) Exit");
 		 
 	}
+	private void userMenu() {
+
+		
+		  System.out.println("1) Register for a customer account");
+		  System.out.println("2) Apply for joint account"); 
+		  System.out.println("3) Exit");
+		 
+	}
 
 	public void display() {
 
 		Scanner scanner = new Scanner(System.in);
 		boolean running = true;
 		System.out.println("Welcome to Our Bank");
+		
+		System.out.println("Are you a new user (Y/N)?");
+		String ch = scanner.nextLine();
+		if (ch.equals("Y") || ch.equals("y")) {
+			System.out.println("User Registration");
+			System.out.println("First Name");
+			String fname = scanner.nextLine();
+			System.out.println("Last Name");
+			String lname = scanner.nextLine();
+			System.out.println("User Name");
+			String username = scanner.nextLine();
+			System.out.println("Password");
+			String password = scanner.nextLine();
+			User newUser = new User(fname,lname,username,password,103);
+     
+			if(sr.registerUser(newUser)) {
+				System.out.println("Successfully added!");
+			}else {
+				System.out.println("not added!");
+			}
+			
+		}
+			
 		System.out.println("Username");
 		String username = scanner.nextLine();
 		System.out.println("Password");
@@ -94,13 +128,58 @@ public class Menu {
 				empMenu();
 						} 
 			else if (res == 102) {
-				System.out.println("User Main Menu");
+				System.out.println("Customer Main Menu");
 				customerMenu();
-						} 
+			}
+			else if (res == 103) {
+					System.out.println("User Main Menu");
+					userMenu();
+					String result = scanner.nextLine();
+					switch (result)
+					{
+					case "1":
+						System.out.println("Create Customer");
+						System.out.println("First Name");
+						String fname = scanner.nextLine();
+						System.out.println("Last Name");
+						String lname = scanner.nextLine();
+						System.out.println("Street");
+						String street = scanner.nextLine();
+						System.out.println("Zipcode");
+						int zipcode = scanner.nextInt();
+						System.out.println("CellPhone");
+						long cellno = scanner.nextLong();
+						
+						System.out.println("Email");
+						String email = scanner.nextLine();
+						System.out.println("identityno");
+						String identityno = scanner.nextLine();
+						
+						Customer newcust = new Customer(fname,lname,street,zipcode,cellno,email,identityno);
+			     
+						if(sr1.registercustomer(newcust)) {
+							System.out.println("Successfully added!");
+						}else {
+							System.out.println("not added!");
+						}
+						
+					default:
+						System.out.println("last Menu");
+					}
+				   } 
 			else 
-				System.out.println("User not found");
+				System.out.println("Invalid Username or Password");
 					
 
+		
+	
+			
+			
+			
+			
+			
+			
+			
 			
 			/*
 			 * System.out.println("Noooosssssssssssssss"); if (result.equals(1) && res ==

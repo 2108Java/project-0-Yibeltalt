@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.bank.models.Customer;
 import com.bank.models.User;
 
 
@@ -70,4 +71,74 @@ public class DataImp {
 			return result;
 		}
 	
+		
+		
+		public boolean registerUser(User newUser) {
+			// TODO Auto-generated method stub
+			//completed
+			boolean success = false;
+			//1. Connect to database!
+			try(Connection connection = DriverManager.getConnection(url,username,password)){
+				
+				//2. Write a SQL statement String
+				
+				String sql = "INSERT INTO b_user (f_name,l_name,username,password,user_type_id) VALUES (?,?,?,?,?)";
+				
+				PreparedStatement ps = connection.prepareStatement(sql);
+				
+				
+				ps.setString(1, newUser.getFname());
+				ps.setString(2, newUser.getLname());
+				ps.setString(3, newUser.getuserName());
+				ps.setString(4, newUser.getPassword());
+				ps.setInt(5, newUser.getUserTypeID());
+				System.out.println(ps);
+				ps.execute();
+				
+				success = true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			return success;
+		}
+				
+		public boolean registercustomer(Customer newcustomer) {
+			// TODO Auto-generated method stub
+			//completed
+			boolean success = false;
+			//1. Connect to database!
+			try(Connection connection = DriverManager.getConnection(url,username,password)){
+				
+				//2. Write a SQL statement String
+				
+				String sql = "insert into b_customer (f_name,l_name,Street,zipcode,cellno,email,identityno) VALUES (?,?,?,?,?,?,?)";
+				
+				PreparedStatement ps = connection.prepareStatement(sql);
+				
+				
+				ps.setString(1, newcustomer.getFname());
+				ps.setString(2, newcustomer.getLname());
+				ps.setString(3, newcustomer.getStreet());
+				ps.setInt(4, newcustomer.getZipCode());
+				ps.setLong(5, newcustomer.getCellNo());
+				ps.setString(6, newcustomer.getEmail());
+				ps.setString(7, newcustomer.getIdentityNo());
+				
+				System.out.println(ps);
+				ps.execute();
+				
+				success = true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			return success;
+		}
 	}

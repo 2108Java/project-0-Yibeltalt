@@ -18,6 +18,13 @@ public class User implements DoUser{
 		this.password= password;
 		this.usertypeid=usertypeid;
 	}
+	public User(String fname,String lname,String username,String password,int usertypeid) {
+		this.fname = fname;
+		this.lname = lname;
+		this.username= username;
+		this.password= password;
+		this.usertypeid=usertypeid;
+	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

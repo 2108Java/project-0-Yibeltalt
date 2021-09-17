@@ -1,6 +1,7 @@
 package com.bank.service;
 
 import com.bank.database.DataImp;
+import com.bank.models.User;
 
 
 public class AuthenticationService {
@@ -22,5 +23,10 @@ public class AuthenticationService {
 		return database.userAutenticate(username,password);
 	}
 	
+	
+	public boolean registerUser(User newuser)
+	{
+		return database.registerUser(newuser);
+	}
 	
 }
