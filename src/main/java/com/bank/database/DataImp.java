@@ -25,7 +25,7 @@ public class DataImp {
 		public int userAutenticate(String username1, String password1) {
 			
 			int result = 0;
-			User [] newuser = new User[10];
+			User  newuser = new User();
 			try(Connection connection = DriverManager.getConnection(url, username, password)){
 			
 				
@@ -40,7 +40,7 @@ public class DataImp {
 				int i =0;
 				while(rs.next()) {
 					
-							newuser[i] = new User(rs.getInt("user_id"),								
+							newuser = new User(rs.getInt("user_id"),								
 									rs.getString("f_name"),
 									rs.getString("l_name"),
 									rs.getString("username"),
@@ -50,7 +50,7 @@ public class DataImp {
 				
 							}
 		
-		result = newuser[0].getUserTypeID();
+		result = (int)newuser.getUserTypeID();
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -164,6 +164,40 @@ public class DataImp {
 				ps.setInt(4, newaccount.getCusid());
 				ps.setInt(5, newaccount.getAcctypeid());
 				
+				System.out.println(ps);
+				ps.execute();
+				
+				success = true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			return success;
+		}
+		public boolean registerAccount2(Account newaccount) {
+			// TODO Auto-generated method stub
+			//completed
+			boolean success = false;
+			//1. Connect to database!
+			try(Connection connection = DriverManager.getConnection(url,username,password)){
+				
+				//2. Write a SQL statement String
+				
+				String sql = "insert into b_account (acc_id, acc_name, balance, cus_id, acc_type_id,cust_id2) VALUES (?,?,?,?,?,?)";
+			
+				
+				PreparedStatement ps = connection.prepareStatement(sql);
+				System.out.println(ps);
+				
+				ps.setInt(1, newaccount.getAccountid());
+				ps.setString(2, newaccount.getAccountname());
+				ps.setDouble(3, newaccount.getBalance());
+				ps.setInt(4, newaccount.getCusid());
+				ps.setInt(5, newaccount.getAcctypeid());
+				ps.setInt(6, newaccount.getCusid2());
 				System.out.println(ps);
 				ps.execute();
 				

@@ -77,12 +77,131 @@ public class Menu {
 		  System.out.println("3) Exit");
 		 
 	}
+	
+	
+	private void registorcustomeraccout(boolean joint) {
+		
+		int acctypeid=0;
+	
+		System.out.println("Create Customer sub menu");
+		Genetateid gin = sr1.getnewid();
+		Genetateid gin2 = sr1.getnewid();
+		if(!joint) {
+			Scanner sc = new Scanner(System.in);
+			int custid = gin.getCustomerid();
+			int accountid =gin.getAccountid();
+			System.out.println("Account type saving /S/ " + "or"+ "cheking /C/");
+			String str =  sc.nextLine();
+			System.out.println("First Name");
+			String fname = sc.nextLine();
+			System.out.println("Last Name");
+			String lname = sc.nextLine();
+			System.out.println("Street");
+			String street = sc.nextLine();
+			System.out.println("Email");
+			String email = sc.nextLine();
+			System.out.println("identityno");
+			String identityno = sc.nextLine();
+			System.out.println("Zipcode");
+			int zipcode = sc.nextInt();	
+			System.out.println("CellPhone");
+			long cellno = sc.nextLong();	
+			System.out.println("Balance");
+			double balance = sc.nextDouble();
+			if (str.equals ("s") || str.equals("S") ) {
+			     acctypeid = 2;
+			}else {
+				 acctypeid = 1;
+			}
+		
+			String accountname = fname;
+			Customer newcust = new Customer(custid,fname,lname,street,zipcode,cellno,email,identityno);
+			Account accnew = new Account(accountid,accountname,balance,custid,acctypeid);
+			if(sr1.registercustomer(newcust)&&sr1.registeraccount(accnew)) {
+				System.out.println("Successfully added!");
+			}else {
+				System.out.println("not added!");
+			}
+			}
+		
+		else {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Joint Account Name");
+			String accountname2 = sc.nextLine();
+			int custid = gin.getCustomerid();
+			System.out.println("Account type saving /S/ " + "or"+ "cheking /C/");
+			String str =  sc.nextLine();
+			System.out.println("First Name");
+			String fname = sc.nextLine();
+			System.out.println("Last Name");
+			String lname = sc.nextLine();
+			System.out.println("Street");
+			String street = sc.nextLine();
+			System.out.println("Email");
+			String email = sc.nextLine();
+			System.out.println("identityno");
+			String identityno = sc.nextLine();
+			System.out.println("Zipcode");
+			int zipcode = sc.nextInt();	
+			System.out.println("CellPhone");
+			long cellno = sc.nextLong();
+			System.out.println("Enter customer 2 information");
+			int custid2 = gin2.getCustomerid();
+			int accountid2 =gin2.getAccountid();
+			System.out.println("First Name");
+			String fname2 = sc.nextLine();
+			System.out.println("Last Name");
+			String lname2 = sc.nextLine();
+			System.out.println("Street");
+			String street2 = sc.nextLine();
+			System.out.println("Email");
+			String email2 = sc.nextLine();
+			System.out.println("identityno");
+			String identityno2 = sc.nextLine();
+			System.out.println("Zipcode");
+			int zipcode2 = sc.nextInt();	
+			System.out.println("CellPhone");
+			long cellno2 = sc.nextLong();
+			
+			System.out.println("Balance");
+			double balance = sc.nextDouble();
+			if (str.equals ("s") || str.equals("S") ) {
+			     acctypeid = 2;
+			}
+			else {
+				 acctypeid = 1;
+			}
+			
+			Customer newcust = new Customer(custid,fname,lname,street,zipcode,cellno,email,identityno);
+			Customer newcust3 = new Customer(custid2,fname2,lname2,street2,zipcode2,cellno2,email2,identityno2);
+			Account accnew1 = new Account(accountid2,accountname2,balance,custid,acctypeid,custid2);
+			
+			
+			if(sr1.registercustomer(newcust)&&sr1.registeraccount2(accnew1)&&sr1.registercustomer(newcust3)) {
+				System.out.println("Successfully added!");
+			}else {
+				System.out.println("not added!");
+			}
+			
+			
+			
+			
+			
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
 
 	public void display() {
 
 		Scanner scanner = new Scanner(System.in);
 		boolean running = true;
-		System.out.println("Welcome to Our Bank");
+		System.out.println("Welcome to Bank");
 		
 		System.out.println("Are you a new user (Y/N)?"+"\n");
 		String ch = scanner.nextLine();
@@ -106,13 +225,15 @@ public class Menu {
 			}
 			
 		}
-			
-		System.out.println("Username");
-		String username = scanner.nextLine();
-		System.out.println("Password");
-		String password = scanner.nextLine();
+		running = true;
+		do {
+			System.out.println("----------------Login Menu-------------- ");	
+			System.out.println("Username");
+			String username = scanner.nextLine();
+			System.out.println("Password");
+			String password = scanner.nextLine();
 
-		while (running) {
+		
 		
 			int res = sr.authenticate(username, password);
 
@@ -144,54 +265,25 @@ public class Menu {
 					switch (result)
 					{
 					case "1":
-						int acctypeid=0;
-						System.out.println("Create Customer");
-						
-						Genetateid gin = sr1.getnewid();
-						int custid = gin.getCustomerid();
-		////
-						System.out.println("First Name");
-						String fname = scanner.nextLine();
-						System.out.println("Last Name");
-						String lname = scanner.nextLine();
-						System.out.println("Street");
-						String street = scanner.nextLine();
-						System.out.println("Email");
-						String email = scanner.nextLine();
-						System.out.println("identityno");
-						String identityno = scanner.nextLine();
-						System.out.println("Zipcode");
-						int zipcode = scanner.nextInt();	
-						System.out.println("CellPhone");
-						long cellno = scanner.nextLong();
-						Customer newcust = new Customer(custid,fname,lname,street,zipcode,cellno,email,identityno);		
-						int accountid =gin.getAccountid();
-						String accountname = fname;
-						System.out.println("Balance");
-						double balance = scanner.nextDouble();
-						System.out.println("Account type Saving S and Checking C ");
-						String str = scanner.nextLine();
-						
-						if (str.equals("s")) {
-						     acctypeid = 2;
-						}else {
-							 acctypeid = 1;
-						}
-					
-						Account accnew = new Account(accountid,accountname,balance,custid,acctypeid);
-						
-					
-						if(sr1.registercustomer(newcust)&&sr1.registeraccount(accnew)) {
-							System.out.println("Successfully added!");
-						}else {
-							System.out.println("not added!");
-						}
+						registorcustomeraccout(false);
+						break;
+					case  "2":
+						registorcustomeraccout(true);
+						break;
+					case "3":
+						running =false;
+						System.out.println("Thanks for using our application ");
+						running = false;
+						break;
 					default:
 						System.out.println("last Menu");
 					}
 				   } 
 			else 
-				System.out.println("Invalid Username or Password");
+				System.out.println("Invalid Username or Password ");
+			
+		}while (running);
+		
 		}
 	}
-}
+

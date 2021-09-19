@@ -9,6 +9,7 @@ public class Account implements DoAccount {
 			private int cusid ;
 			private int acctypeid;
 			private Date datecreated;
+			private int cusid2;
 		
 			public Account(int accountid, String accountname, double balance, int cusid, int acctypeid,
 					Date datecreated) {
@@ -30,6 +31,17 @@ public class Account implements DoAccount {
 				
 			}
 
+			public Account(int accountid2, String accountname2, double balance2, int custid, int acctypeid2,
+					int custid2) {super();
+					this.accountid = accountid2;
+					this.accountname = accountname2;
+					this.balance = balance2;
+					this.cusid = custid;
+					this.acctypeid = acctypeid2;
+					this.cusid2 =custid2;
+					
+				// TODO Auto-generated constructor stub
+			}
 			@Override
 			public String toString() {
 				return "Account [accountid=" + accountid + ", accountname=" + accountname + ", balance=" + balance
@@ -66,6 +78,13 @@ public class Account implements DoAccount {
 
 			public void setCusid(int cusid) {
 				this.cusid = cusid;
+			}
+			public int getCusid2() {
+				return cusid2;
+			}
+
+			public void setCusid2(int cusid2) {
+				this.cusid2 = cusid2;
 			}
 
 			public int getAcctypeid() {

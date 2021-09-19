@@ -24,6 +24,10 @@ public class BankRegistrationService {
 			// TODO Auto-generated method stub
 			return database.registerAccount(newaccount);
 		}
+		public boolean registeraccount2(Account newaccount) {
+			// TODO Auto-generated method stub
+			return database.registerAccount2(newaccount);
+		}
 		
 		public  Genetateid getnewid() {
 			// TODO Auto-generated method stub
