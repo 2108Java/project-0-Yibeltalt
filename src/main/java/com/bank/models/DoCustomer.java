@@ -1,7 +1,9 @@
 package com.bank.models;
 
+import java.sql.Date;
+
 public interface DoCustomer {
-	
+
 	public int getCustomerId() ;
 	public void setCustomerId(int customerid);
 	public String getFname();
@@ -18,7 +20,7 @@ public interface DoCustomer {
 	public void setEmail(String email);
 	public String getIdentityNo();
 	public void setIdentityNo(String identityno);
-	
+	public void setDatecreated(Date datecreated);
 	
 
 }

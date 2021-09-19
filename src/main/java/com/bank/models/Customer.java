@@ -1,5 +1,7 @@
 package com.bank.models;
 
+import java.sql.Date;
+
 public class Customer implements DoCustomer{
 		
 		private int customerid;
@@ -10,36 +12,25 @@ public class Customer implements DoCustomer{
 		private long cellno ;
 		private String email ;
 		private String identityno;
+		private Date datecreated;
 		
-		public Customer(int customerid,String fname,String lname,String street ,int zipcode ,long cellno ,String email,String identityno) {
-			
-		this.customerid=customerid;
-		this.fname=fname;
-		this.lname=lname;
-		this.street=street;
-		this.zipcode=zipcode;
-		this.cellno=cellno;
-		this.email=email;
-		this.identityno=identityno;
-		
+		public Customer(int custid,String fname,String lname,String street ,int zipcode ,long cellno ,String email,String identityno) 
+		{
+		this.customerid=custid;	
+		this.fname = fname;
+		this.lname = lname;
+		this.street = street;
+		this.zipcode = zipcode;
+		this.cellno = cellno;
+		this.email = email;
+		this.identityno = identityno;
+		System.out.println("on constractor");
 		}
-		public Customer(String fname,String lname,String street ,int zipcode ,long cellno ,String email,String identityno) {
-			
-			this.fname=fname;
-			this.lname=lname;
-			this.street=street;
-			this.zipcode=zipcode;
-			this.cellno=cellno;
-			this.email=email;
-			this.identityno=identityno;
-			
-			}
-		
-		
 		public Customer() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
+		
 		@Override
 		public int getCustomerId() {
 			// TODO Auto-generated method stub	
@@ -140,8 +131,9 @@ public class Customer implements DoCustomer{
 			// TODO Auto-generated method stub
 			this.identityno = identityno;
 		}
-		
-			
+		public void setDatecreated(Date datecreated) {
+			this.datecreated = datecreated;
 		}
+	}
 
 

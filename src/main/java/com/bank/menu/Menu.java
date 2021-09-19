@@ -1,7 +1,10 @@
 package com.bank.menu;
+import java.sql.Date;
 import java.util.Scanner;
 
+import com.bank.models.Account;
 import com.bank.models.Customer;
+import com.bank.models.Genetateid;
 import com.bank.models.User;
 import com.bank.service.AuthenticationService;
 import com.bank.service.BankRegistrationService;
@@ -11,9 +14,11 @@ public class Menu {
 
 	AuthenticationService sr;
 	BankRegistrationService sr1;
-	public Menu(AuthenticationService sr) {
+	public Menu(AuthenticationService sr,BankRegistrationService sr1) {
 		this.sr = sr;
+		this.sr1 = sr1;
 	}
+	
 
 	/*
 	 * private void prettyDisplayOfArray(DoUser[] user) {
@@ -79,7 +84,7 @@ public class Menu {
 		boolean running = true;
 		System.out.println("Welcome to Our Bank");
 		
-		System.out.println("Are you a new user (Y/N)?");
+		System.out.println("Are you a new user (Y/N)?"+"\n");
 		String ch = scanner.nextLine();
 		if (ch.equals("Y") || ch.equals("y")) {
 			System.out.println("User Registration");
@@ -94,7 +99,8 @@ public class Menu {
 			User newUser = new User(fname,lname,username,password,103);
      
 			if(sr.registerUser(newUser)) {
-				System.out.println("Successfully added!");
+				System.out.println("User Successfully added!");
+				
 			}else {
 				System.out.println("not added!");
 			}
@@ -138,90 +144,54 @@ public class Menu {
 					switch (result)
 					{
 					case "1":
+						int acctypeid=0;
 						System.out.println("Create Customer");
+						
+						Genetateid gin = sr1.getnewid();
+						int custid = gin.getCustomerid();
+		////
 						System.out.println("First Name");
 						String fname = scanner.nextLine();
 						System.out.println("Last Name");
 						String lname = scanner.nextLine();
 						System.out.println("Street");
 						String street = scanner.nextLine();
-						System.out.println("Zipcode");
-						int zipcode = scanner.nextInt();
-						System.out.println("CellPhone");
-						long cellno = scanner.nextLong();
-						
 						System.out.println("Email");
 						String email = scanner.nextLine();
 						System.out.println("identityno");
 						String identityno = scanner.nextLine();
+						System.out.println("Zipcode");
+						int zipcode = scanner.nextInt();	
+						System.out.println("CellPhone");
+						long cellno = scanner.nextLong();
+						Customer newcust = new Customer(custid,fname,lname,street,zipcode,cellno,email,identityno);		
+						int accountid =gin.getAccountid();
+						String accountname = fname;
+						System.out.println("Balance");
+						double balance = scanner.nextDouble();
+						System.out.println("Account type Saving S and Checking C ");
+						String str = scanner.nextLine();
 						
-						Customer newcust = new Customer(fname,lname,street,zipcode,cellno,email,identityno);
-			     
-						if(sr1.registercustomer(newcust)) {
+						if (str.equals("s")) {
+						     acctypeid = 2;
+						}else {
+							 acctypeid = 1;
+						}
+					
+						Account accnew = new Account(accountid,accountname,balance,custid,acctypeid);
+						
+					
+						if(sr1.registercustomer(newcust)&&sr1.registeraccount(accnew)) {
 							System.out.println("Successfully added!");
 						}else {
 							System.out.println("not added!");
 						}
-						
 					default:
 						System.out.println("last Menu");
 					}
 				   } 
 			else 
 				System.out.println("Invalid Username or Password");
-					
-
-		
-	
-			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			 * System.out.println("Noooosssssssssssssss"); if (result.equals(1) && res ==
-			 * 100) { System.out.println ("admin 1st menu"); } else System.out.println
-			 * ("other");
-			 */
-			
-			
-			/*
-			 * switch (result) { case "1": User[] user = sr.getAllUser();
-			 * prettyDisplayOfArray(user); break; case "2": System.out.println("UserId:");
-			 * String userId = scanner.nextLine(); System.out.println("First Name"); String
-			 * fName = scanner.nextLine(); System.out.println("Last Name:"); String lName =
-			 * scanner.nextLine(); System.out.println("Password"); String password =
-			 * scanner.nextLine(); user newUser = new user(userId, fName, lName, password);
-			 * 
-			 * if (sr.addUser(newUser)) { System.out.println("Successfully added!"); } else
-			 * { System.out.println("not added!"); }
-			 * 
-			 * break;
-			 * 
-			 * case "3": System.out.println("Enter User ID to Search"); String usersearch =
-			 * scanner.nextLine(); user[] searcheduser = sr.getUserByid(usersearch);
-			 * prettyDisplayOfArray(searcheduser); break;
-			 * 
-			 * case "4": System.out.println("Enter User ID to delete "); String userdelete =
-			 * scanner.nextLine(); if (sr.delUserByid(userdelete)) {
-			 * System.out.println("Successfully deleted!"); } else {
-			 * System.out.println("not deleted!"); }
-			 * 
-			 * break;
-			 * 
-			 * case "5": System.out.println("Thanks for using our application "); running =
-			 * false; System.exit(0); break; // default: //
-			 * System.out.println("That's not a valid input!"); //
-			 * System.out.println("Try again!");
-			 * 
-			 * }
-			 */
-
 		}
-
 	}
-
 }
