@@ -10,6 +10,7 @@ public class Account implements DoAccount {
 			private int acctypeid;
 			private Date datecreated;
 			private int cusid2;
+			private boolean authorized;
 		
 			public Account(int accountid, String accountname, double balance, int cusid, int acctypeid,
 					Date datecreated) {
@@ -39,6 +40,18 @@ public class Account implements DoAccount {
 					this.cusid = custid;
 					this.acctypeid = acctypeid2;
 					this.cusid2 =custid2;
+					
+				// TODO Auto-generated constructor stub
+			}
+			public Account(int accountid2, String accountname2, double balance2, int custid, int acctypeid2,
+					int custid2,boolean authorized) {super();
+					this.accountid = accountid2;
+					this.accountname = accountname2;
+					this.balance = balance2;
+					this.cusid = custid;
+					this.acctypeid = acctypeid2;
+					this.cusid2 =custid2;
+					this.authorized=authorized;
 					
 				// TODO Auto-generated constructor stub
 			}
@@ -102,7 +115,13 @@ public class Account implements DoAccount {
 			public void setDatecreated(Date datecreated) {
 				this.datecreated = datecreated;
 			}
-			
+			public boolean getauthorized() {
+				return authorized;
+			}
+
+			public void setauthorized(boolean  authorized) {
+				this.authorized = authorized;
+			}
 			
 
 	

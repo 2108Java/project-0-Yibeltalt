@@ -24,7 +24,6 @@ public class Customer implements DoCustomer{
 		this.cellno = cellno;
 		this.email = email;
 		this.identityno = identityno;
-		System.out.println("on constractor");
 		}
 		public Customer() {
 			super();
