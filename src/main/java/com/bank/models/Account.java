@@ -12,6 +12,11 @@ public class Account implements DoAccount {
 			private int cusid2;
 			private boolean authorized;
 		
+			
+			public Account () {
+				super();
+			}
+		
 			public Account(int accountid, String accountname, double balance, int cusid, int acctypeid,
 					Date datecreated) {
 				super();
@@ -55,6 +60,21 @@ public class Account implements DoAccount {
 					
 				// TODO Auto-generated constructor stub
 			}
+			
+
+			public Account(int acc_id,String acc_name,Double balance,int cus_id,int acc_type_id,Date date_created,boolean authorized,int cust_id2){
+				this.accountid = acc_id;
+				this.accountname = acc_name;
+				this.balance = balance;
+				this.cusid= cus_id;
+				this.acctypeid= acc_type_id;
+				this.datecreated = date_created;
+				this.authorized=authorized;
+				this.cusid2=cust_id2;
+			}
+						
+			
+			
 			@Override
 			public String toString() {
 				return "Account [accountid=" + accountid + ", accountname=" + accountname + ", balance=" + balance

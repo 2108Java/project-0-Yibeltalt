@@ -51,13 +51,20 @@ public class BankRegistrationService {
 			// TODO Auto-generated method stub
 			return database.balanceofmyaccount(cusid,idenum);
 		}
+		public  double balanceofmyaccount2(int cusid) {
+			// TODO Auto-generated method stub
+			return database.balanceofmyaccount2(cusid);
+		}
+		public  boolean approveaccount(int cusid) {
+			// TODO Auto-generated method stub
+			return database.approveAccount (cusid);
+		}
 		
-		
-//		public boolean registercustomer(Customer newcust) {
-//			// TODO Auto-generated method stub
-//			return database.registercustomer(newcust);
-//		}
-//		
+		public  Account viewaccount(int cusid) {
+			
+			return database.viewaccount (cusid);
+		}
+
 	}
 	
 	

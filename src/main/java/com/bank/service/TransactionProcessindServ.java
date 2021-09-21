@@ -29,11 +29,17 @@ DataImp database;
 		
 		return database.Transactioncheck(cusid,idenum, amount);
    }
+	public int Transactioncheck2(int cusid,double amount) {
+		
+		return database.Transactioncheck2(cusid, amount);
+   }
+	
 	
 	public boolean transferotherAccount(Transaction tra, double balance1,double balance2) {
 		
 		return database.transferotherAccount(tra,balance1,balance2);
    }
+
 	
 	
 	

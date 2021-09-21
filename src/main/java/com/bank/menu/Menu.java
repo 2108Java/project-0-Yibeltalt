@@ -45,7 +45,9 @@ public class Menu {
 
 	private void adminMenu() {
 
-		
+		  System.out.println("\n");
+		  System.out.println("Adminstrator Main Menu");
+		  System.out.println("\n");
 		  System.out.println("1) Register for a customer account");
 		  System.out.println("2) Approve or reject an account registration");
 		  System.out.println("3) View a customer's bank accounts");
@@ -58,18 +60,21 @@ public class Menu {
 	}
 	private void empMenu() {
 
-		
+		  System.out.println("\n");
+		  System.out.println("Employee Main Menu");
+		  System.out.println("\n");
 		  System.out.println("1) Register for a customer account");
-		  System.out.println("2) Approve or reject an account registration");
+		  System.out.println("2) Approve an account registration");
 		  System.out.println("3) View a customer's bank accounts");
 		  System.out.println("4) view a log of all transactions"); 
-		  
 		  System.out.println("5) Exit");
 		 
 	}
 	private void customerMenu() {
 
-		
+		  System.out.println("\n");
+		  System.out.println("Customer Main Menu");
+		  System.out.println("\n");
 		  System.out.println("1) Register for a customer account");
 		  System.out.println("2) balance of a specific account");
 		  System.out.println("3) Withdrawal or deposit");
@@ -79,7 +84,9 @@ public class Menu {
 	}
 	private void userMenu() {
 
-		
+		  System.out.println("\n");
+		  System.out.println("User Main Menu");
+		  System.out.println("\n");
 		  System.out.println("1) Register for a customer account");
 		  System.out.println("2) Apply for joint account"); 
 		  System.out.println("3) Exit");
@@ -207,6 +214,24 @@ public class Menu {
 	}
 	
 	
+	public void viewaccount() {
+		Scanner sc2 = new Scanner(System.in);
+		System.out.println("customer account Enquiry");
+		int cusid= sc2.nextInt();
+		Account acc=sr1.viewaccount(cusid);
+			System.out.println("\n");
+			System.out.println("Account Id :"+ acc.getAccountid());
+			System.out.println("Account Name :"+acc.getAccountname());
+			System.out.println("Balance :"+acc.getBalance());
+			System.out.println("Customer Id :"+acc.getCusid());
+			System.out.println("Date Created :"+acc.getDatecreated());
+			System.out.println("Authorized :"+acc.getauthorized());
+			System.out.println("Joint Customer :"+acc.getCusid2());
+
+
+		}
+		
+	
 	public void balanceofmyaccount() {
 		Scanner sc2 = new Scanner(System.in);
 		System.out.println("Enter the customer id");
@@ -224,6 +249,16 @@ public class Menu {
 		
 	}
 	
+	public void approveaccount() {
+		Scanner sc2 = new Scanner(System.in);
+		System.out.println("Enter the customer id");
+		int cusid= sc2.nextInt();
+		if(sr1.approveaccount(cusid)) {
+			System.out.println("Account Authorized !");
+		}else {
+			System.out.println("Account not Authorized !");
+		}	
+	}
 	
 	public void withdrawaldeposit() {
 		
@@ -298,6 +333,8 @@ public class Menu {
 	}
 		
 	public void transferotherAccount() {
+
+		
 		Scanner sc3 = new Scanner(System.in);
 		System.out.println("Enter the customer id");
 		int cusid= sc3.nextInt();
@@ -309,20 +346,13 @@ public class Menu {
 		System.out.println("Amount");
 		double amount= sc3.nextDouble();
 		System.out.println("text message");
+		sc3.nextLine();
 		String messg= sc3.nextLine();
 		int accno1 = sr2.Transactioncheck(cusid,idenum,amount);
-		int accno2 = sr2.Transactioncheck(cusid2,"emp",amount);
-		
-		System.out.println("##############################"+accno1);
-		
-		System.out.println("##############################"+accno2);
-		
-		
+		int accno2 = sr2.Transactioncheck2(cusid2,amount);
 		Transaction tra = new Transaction (accno1,accno2,amount,messg,3);
 		Double balance1 =sr1.balanceofmyaccount(cusid,idenum);
-		Double balance2= sr1.balanceofmyaccount(cusid2,idenum);
-		System.out.println("##############################"+balance1);
-		System.out.println("##############################"+balance1);
+		Double balance2= sr1.balanceofmyaccount2(cusid2);
 		if (sr2.transferotherAccount(tra,balance1,balance2))
 			System.out.println("Transfer balance successfuly completed ");
 		else 
@@ -355,6 +385,7 @@ public class Menu {
      
 			if(sr.registerUser(newUser)) {
 				System.out.println("User Successfully added!");
+				System.out.println("\n");
 				
 			}else {
 				System.out.println("not added!");
@@ -381,7 +412,7 @@ public class Menu {
 				
 				loggy.info("User selected Admin menu");
 				
-				System.out.println("Adminstrator Main Menu");
+				
 				adminMenu();
 
 				String result = scanner.nextLine();
@@ -395,15 +426,45 @@ public class Menu {
 			   } 
 			else if (res == 101) {
 				loggy.info("User selected Employee menu");
-				System.out.println("Employee Main Menu");
-				empMenu();
+				
+				boolean runningin = true;
+				 do {
+					 
+					 empMenu();
+					 String result = scanner.nextLine();
+						switch (result)
+						{
+						case "1":
+							registorcustomeraccout(false,102);
+							break;
+						case "2":
+							approveaccount();
+							break;
+						case "3":
+							viewaccount();
+							break;
+						case "4":
+							transferotherAccount();
+							break;
+						case "5":
+						//	running =false;
+						//	System.out.println("Thanks for using our application ");
+							runningin = false;
+							//running = false;
+							break;
+						default:
+							System.out.println("last Menu");
+							
+						}
+				 }while (runningin);
+				
 						} 
 			else if (res == 102) {//customer menu
 				loggy.info("User selected Customer menu");
 				
 				boolean runningin = true;
 				 do {
-					 System.out.println("Customer Main Menu");
+					 
 					 customerMenu();
 					 String result = scanner.nextLine();
 						switch (result)
@@ -438,7 +499,7 @@ public class Menu {
 				loggy.info("User selected User menu");
 				boolean runningin = true;
 				 do {
-					System.out.println("User Main Menu");
+					
 					userMenu();
 					String result = scanner.nextLine();
 					switch (result)
@@ -450,7 +511,7 @@ public class Menu {
 						registorcustomeraccout(true,res);
 						break;
 					case "3":
-						running =false;
+						//running =false;
 						System.out.println("Thanks for using our application ");
 						runningin = false;
 						//running = false;

@@ -9,7 +9,7 @@ import com.bank.models.Customer;
 import com.bank.models.Genetateid;
 import com.bank.models.Transaction;
 import com.bank.models.User;
-
+import java.sql.Date;
 
 
 
@@ -64,8 +64,8 @@ public class DataImp {
 		
 		
 	public boolean registerUser(User newUser) {
-			// TODO Auto-generated method stub
-			//completed
+			
+			
 			boolean success = false;
 			//1. Connect to database!
 			try(Connection connection = DriverManager.getConnection(url,username,password)){
@@ -82,13 +82,13 @@ public class DataImp {
 				ps.setString(3, newUser.getuserName());
 				ps.setString(4, newUser.getPassword());
 				ps.setInt(5, newUser.getUserTypeID());
-				System.out.println(ps);
+			
 				ps.execute();
 				
 				success = true;
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			}
 
@@ -316,7 +316,7 @@ public class DataImp {
 					
 				
 			      }
-				System.out.print(success+"on database");
+				//System.out.print(success+"on database");
 				
 				return success;
 				}
@@ -324,34 +324,10 @@ public class DataImp {
 		
 	public double balanceofmyaccount(int cusid,String idenum) {
 			double result = 0;
-			if (!idenum.equals("emp")) {
-			try(Connection connection = DriverManager.getConnection(url, username, password)){
-			
-				
-				String sql = "select balance from b_account where cus_id = (select cus_id from b_customer where cus_id = ? and identityno = ?)";
-					
-				PreparedStatement ps = connection.prepareStatement(sql);
-				
-				ps.setInt(1, cusid);
-				ps.setString(2, idenum);	
-
-				ResultSet rs = ps.executeQuery();
-				
-
-				while(rs.next()) {
-					result = rs.getDouble("balance");
-				}
-			
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
-			else {
 				try(Connection connection = DriverManager.getConnection(url, username, password)){
 					
 					
-					String sql = "select balance from b_account where cus_id = (select cus_id from b_customer where cus_id = ? ";
+					String sql = "select balance from b_account where cus_id = (select cus_id from b_customer where cus_id = ? and identityno = ?)";
 						
 					PreparedStatement ps = connection.prepareStatement(sql);
 					
@@ -370,7 +346,7 @@ public class DataImp {
 					e.printStackTrace();
 				}
 			
-			}
+			
 			
 			
 			return result;
@@ -574,39 +550,6 @@ public class DataImp {
 		int accid = 0;
 		int result =0;
 		
-		
-		
-		if (identno.equals("")){
-			try(Connection connection = DriverManager.getConnection(url, username, password)){
-		
-			String sql = "select balance ,acc_id from b_account where cus_id = (select cus_id from b_customer where cus_id = ? )";
-				
-			PreparedStatement ps = connection.prepareStatement(sql);
-			
-			ps.setInt(1, cusid);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next())
-				{
-			balance1 = rs.getDouble("balance");
-			accid = rs.getInt("acc_id");			
-				}
-			System.out.println(balance1);
-			System.out.println(accid);
-			if 	(amount > balance1) {
-			result = 1;
-		
-				}
-				else if (amount< 0)
-				{
-					result = 2;
-					}
-		
-				} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}
-			}
-		else {
 			try(Connection connection = DriverManager.getConnection(url, username, password)){
 			String sql = "select balance ,acc_id from b_account where cus_id = (select cus_id from b_customer where cus_id = ? and identityno = ?)";
 			
@@ -620,8 +563,8 @@ public class DataImp {
 				balance1 = rs.getDouble("balance");
 				accid = rs.getInt("acc_id");			
 			}
-			System.out.println(balance1);
-			System.out.println(accid);
+			//System.out.println(balance1);
+			//System.out.println(accid);
 			if 	(amount > balance1) {
 				result = 1;
 			
@@ -635,19 +578,12 @@ public class DataImp {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
-		
-			
-		
-			
-		
-		if (!(result ==2 ||result==1))
-	       result = accid;
-		
-		System.out.println(result);
-		return result;
-		
+			if (!(result ==2 ||result==1))
+			       result = accid;
+				
+				System.out.println(result);
+			return result;
+					
 			
 		}
 		
@@ -681,8 +617,7 @@ public class DataImp {
 		// updating first customer balance
 		try(Connection connection = DriverManager.getConnection(url, username, password)){
 						
-			System.out.println("@@@@@@@@@@@@@@@@@"+balance1);
-			System.out.println("@@@@@@@@@@@@@@@@@"+balance2);	
+			
 			double newbalance = balance1-trs.getAmount();
 				
 			String sql = "update b_account set balance=? where acc_id= ?";
@@ -711,7 +646,7 @@ public class DataImp {
 			ps.setInt(2, trs.getCr_account());
 
 			ps.execute();
-			success2= true;
+			success3= true;
 		
 			} catch (SQLException e) {
 
@@ -730,13 +665,133 @@ public class DataImp {
 		
 	}
 		
-}	
+	public Account  viewaccount (int cusid) {
+		
+		Account acc =new Account();
 		
 		
+		//selecting the next available ID
+				try(Connection connection = DriverManager.getConnection(url, username, password)){
+			
+					String sql = "select acc_id,acc_name,balance,cus_id,acc_type_id,date_created,authorized ,cust_id2 from b_account where cus_id = ?";
+			
+					PreparedStatement ps = connection.prepareStatement(sql);
+					
+					ps.setInt(1, cusid);
+					
+					ResultSet rs = ps.executeQuery();
+			        
+					while(rs.next()) {
+					acc = new Account(rs.getInt("acc_id"), 
+								rs.getString("acc_name"), 
+								rs.getDouble("balance"),
+								rs.getInt("cus_id"), 
+								rs.getInt("acc_type_id"), 
+								rs.getDate("date_created"),
+								rs.getBoolean("authorized"), 
+								rs.getInt("cust_id2")
+							);
+					}
+					
+					
+					//int ids =gid.getCustomerid();
+		
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+		return acc;
+	}
+	public int Transactioncheck2(int cusid, double amount) {
+	
+	double balance1 = 0;
+	int accid = 0;
+	int result =0;
+	
+		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		String sql = "select balance ,acc_id from b_account where cus_id = (select cus_id from b_customer where cus_id = ? )";
+		
+		PreparedStatement ps = connection.prepareStatement(sql);
+			
+		ps.setInt(1, cusid);
+	
+		ResultSet rs = ps.executeQuery();
+		while(rs.next())
+		{
+			balance1 = rs.getDouble("balance");
+			accid = rs.getInt("acc_id");			
+		}
+		//System.out.println(balance1);
+		//System.out.println(accid);
+		
+				} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!(result ==2 ||result==1))
+		       result = accid;
+			
+			
+		return result;
+				
+		
+	}	
+		
+	public double balanceofmyaccount2(int cusid) {
+		double result = 0;
+			try(Connection connection = DriverManager.getConnection(url, username, password)){
+				
+				
+				String sql = "select balance from b_account where cus_id = (select cus_id from b_customer where cus_id = ? )";
+					
+				PreparedStatement ps = connection.prepareStatement(sql);
+				
+				ps.setInt(1, cusid);
+			
+
+				ResultSet rs = ps.executeQuery();
+				
+
+				while(rs.next()) {
+					result = rs.getDouble("balance");
+				}
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		
+		
+		return result;
+	}
+
+	public boolean approveAccount (int cusid) {
+	
+		boolean successful = false;
+		try(Connection connection = DriverManager.getConnection(url, username, password)){
+			
+			String sql = "update b_account set authorized = true where cus_id = ?";
+				
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setInt(1, cusid);
+			
+			ps.execute();
+		
+			
+			successful =true;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return successful;
 		
 	
-
-
+	}
+}
 
 
 
