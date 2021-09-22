@@ -40,7 +40,11 @@ DataImp database;
 		return database.transferotherAccount(tra,balance1,balance2);
    }
 
-	
+	public Transaction [] displaytrans() {
+		
+		return database.displaytrans();
+   }
+
 	
 	
 	

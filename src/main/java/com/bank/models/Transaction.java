@@ -22,17 +22,17 @@ public class Transaction {
 		this.transtypeid=transid;
 		}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Transaction (int transid,int db_acc,int cr_acc,Double amount,String mess,Date datecreated,int transid2) {
+		super();
+		this.tranid =transid;
+		this.db_account =db_acc;
+		this.cr_account =cr_acc;
+		this.amount=amount;
+		this.reference =mess;
+		this.datecreated=datecreated;
+		this.transtypeid=transid2;
+		
+	}
 	
 	
 	public int getTranid() {

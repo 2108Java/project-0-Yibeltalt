@@ -9,6 +9,8 @@ import com.bank.models.Customer;
 import com.bank.models.Genetateid;
 import com.bank.models.Transaction;
 import com.bank.models.User;
+
+
 import java.sql.Date;
 
 
@@ -766,8 +768,41 @@ public class DataImp {
 		
 		return result;
 	}
-
+	public Transaction [] displaytrans() {
+		Transaction[] tran = new Transaction[30];
+		try(Connection connection = DriverManager.getConnection(url, username, password)){
+			
+			String sql = "select trans_id,db_account,cr_account,amount,reference,date_created,transaction_type_id from b_transaction";
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				
+						tran[i] = new Transaction(rs.getInt("trans_id"), 
+						rs.getInt("db_account"), 
+						rs.getInt("cr_account"),
+						rs.getDouble("amount"), 
+						rs.getString("reference"), 
+						rs.getDate("date_created"),
+						rs.getInt("transaction_type_id"));
+						
+				i++;
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return tran;
+	}
 	public boolean approveAccount (int cusid) {
+
 	
 		boolean successful = false;
 		try(Connection connection = DriverManager.getConnection(url, username, password)){

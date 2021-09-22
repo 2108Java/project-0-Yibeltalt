@@ -1,5 +1,4 @@
 package com.bank.menu;
-import java.sql.Date;
 import java.util.Scanner;
 
 import org.apache.log4j.Level;
@@ -17,7 +16,7 @@ import com.bank.service.TransactionProcessindServ;
 
 
 public class Menu {
-
+	public static final Logger loggy= Logger.getLogger(Menu.class);
 	AuthenticationService sr;
 	BankRegistrationService sr1;
 	TransactionProcessindServ sr2;
@@ -26,22 +25,7 @@ public class Menu {
 		this.sr1 = sr1;
 		this.sr2 = sr2;
 	}
-	
-	private static final Logger loggy = Logger.getLogger(Menu.class);
-	/*
-	 * private void prettyDisplayOfArray(DoUser[] user) {
-	 * 
-	 * for (int i = 0; i < user.length; i++) {
-	 * 
-	 * if (user[i] != null) { System.out.println(user[i].getId());
-	 * System.out.println(user[i].getfname());
-	 * System.out.println(user[i].getlname());
-	 * System.out.println(user[i].getpassword()); System.out.println("");
-	 * 
-	 * }
-	 * 
-	 * } }
-	 */
+
 
 	private void adminMenu() {
 
@@ -134,7 +118,7 @@ public class Menu {
 			Customer newcust = new Customer(custid,fname,lname,street,zipcode,cellno,email,identityno);
 			Account accnew = new Account(accountid,accountname,balance,custid,acctypeid);
 			if(sr1.registercustomer(newcust)&&sr1.registeraccount(accnew,userid)) {
-				System.out.println("Successfully added!");
+				System.out.println("Successfully added!" +custid);
 			}else {
 				System.out.println("not added!");
 			}
@@ -199,7 +183,7 @@ public class Menu {
 			
 			
 			if(sr1.registercustomer(newcust)&&sr1.registeraccount2(accnew1)&&sr1.registercustomer(newcust3)) {
-				System.out.println("Successfully added!");
+				System.out.println("Successfully added!"+custid);
 			}else {
 				System.out.println("not added!");
 			}
@@ -321,8 +305,8 @@ public class Menu {
 		
 		if ((with==true)||(dep==true))
 		{
-			System.out.println("************"+result3);
-			System.out.println ("Transaction completed successfully !!)"+"\n");
+			
+			System.out.println ("Transaction completed successfully !!"+"\n");
 			
 		}
 		else 
@@ -360,7 +344,28 @@ public class Menu {
 		
 	}
 	
-	
+	public void displayalltrans() {
+		
+		Transaction [] t = new Transaction[30];
+		
+		t = sr2.displaytrans();
+		
+		
+		for(int i = 0; i< t.length; i++) {
+			
+			if(t[i] != null) {
+			System.out.println("\n");
+			System.out.println("-------------Transaction Id :"+t[i].getTranid()+"-----------------");
+			System.out.println("Transaction Id :"+t[i].getTranid());
+			System.out.println("Debit Account :"+t[i].getDb_account());
+			System.out.println("Credit Account :"+t[i].getCr_account());
+			System.out.println("Amount :"+t[i].getAmount());
+			System.out.println("Reference :"+t[i].getReference());
+			System.out.println("Date Created :"+t[i].getDatecreated());
+			System.out.println("Transaction Type Id :"+t[i].getTranstypeid());
+			}
+		}
+	}
 
 	public void display() {
 		
@@ -384,6 +389,7 @@ public class Menu {
 			User newUser = new User(fname,lname,username,password,103);
      
 			if(sr.registerUser(newUser)) {
+				System.out.println("\n");
 				System.out.println("User Successfully added!");
 				System.out.println("\n");
 				
@@ -419,7 +425,7 @@ public class Menu {
 				switch (result)
 				{
 				case "1":
-					System.out.println("the first menu");
+					System.out.println("will be implemented");
 				default:
 					System.out.println("last Menu");
 				}
@@ -444,13 +450,15 @@ public class Menu {
 							viewaccount();
 							break;
 						case "4":
-							transferotherAccount();
+							displayalltrans();
 							break;
 						case "5":
 						//	running =false;
 						//	System.out.println("Thanks for using our application ");
 							runningin = false;
 							//running = false;
+							System.out.println("Thanks for using our application << user logged out  ");
+							System.out.println("\n");
 							break;
 						default:
 							System.out.println("last Menu");
@@ -487,6 +495,8 @@ public class Menu {
 						//	System.out.println("Thanks for using our application ");
 							runningin = false;
 							//running = false;
+							System.out.println("Thanks for using our application << user logged out  ");
+							System.out.println("\n");
 							break;
 						default:
 							System.out.println("last Menu");
@@ -512,7 +522,8 @@ public class Menu {
 						break;
 					case "3":
 						//running =false;
-						System.out.println("Thanks for using our application ");
+						System.out.println("Thanks for using our application << user logged out  ");
+						System.out.println("\n");
 						runningin = false;
 						//running = false;
 						break;

@@ -1,6 +1,6 @@
 package com.bank;
-import org.apache.log4j.Level;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.bank.database.DataImp;
@@ -10,12 +10,15 @@ import com.bank.service.BankRegistrationService;
 import com.bank.service.TransactionProcessindServ;
 
 
+
+
+
 public class MainBankDriver {
 	
-	public final static Logger loggy = Logger.getLogger(MainBankDriver.class);
-
+    public final static Logger loggy = Logger.getLogger(MainBankDriver.class);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 		loggy.setLevel(Level.WARN);
 		
 		loggy.info("Starting the application");
